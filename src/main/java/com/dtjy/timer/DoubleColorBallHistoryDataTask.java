@@ -8,14 +8,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Queue;
+import javax.jms.Destination;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +29,8 @@ import java.util.TreeMap;
 @Slf4j
 public class DoubleColorBallHistoryDataTask {
 
+    private static final Destination destination = new ActiveMQQueue("dcb-history-data");
+
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
 
@@ -39,9 +39,8 @@ public class DoubleColorBallHistoryDataTask {
 
         log.info("项目启动，双色球数据采集页面爬取任务开始");
         Integer year = LocalDate.now().getYear();
-        Queue queue = new ActiveMQQueue("dcb-history-data-queue");
         for(int i=2003;i<=year;i++) {
-            jmsMessagingTemplate.convertAndSend(queue, JSON.toJSONString(queryHistoryData(year)));
+            jmsMessagingTemplate.convertAndSend(destination, JSON.toJSONString(queryHistoryData(year)));
         }
         log.info("项目启动，双色球数据采集页面爬取任务结束");
     }
