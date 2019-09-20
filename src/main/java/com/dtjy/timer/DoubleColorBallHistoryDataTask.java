@@ -40,7 +40,7 @@ public class DoubleColorBallHistoryDataTask {
     private JmsMessagingTemplate jmsMessagingTemplate;
 
 //    @Scheduled(cron = "${dcb.history.task}")
-        @Scheduled(cron = "0 0/5 * * * ?")
+//        @Scheduled(cron = "0 0/5 * * * ?")
     public void doTask()throws Exception{
         log.info("项目启动，数据采集页面爬取任务开始");
         Integer year = LocalDate.now().getYear();

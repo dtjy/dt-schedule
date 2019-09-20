@@ -27,7 +27,7 @@ public class DoubleColorBalLastDataTask {
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
 
-    @Scheduled(cron = "${dcb.last.task}")
+//    @Scheduled(cron = "${dcb.last.task}")
 //    @Scheduled(cron = "0/30 * * * * ?")
     public void doTask()throws Exception{
 //双色球
